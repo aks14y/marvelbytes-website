@@ -11,6 +11,7 @@
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { Button, LiquidButton } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 const HERO_BG_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663760897792/GjwaD8BUpahCMzSYSk6nPk/hero-background-DHbPyU33qVPpjTxxYM29Jo.webp";
 
@@ -29,11 +30,15 @@ export default function Hero() {
               organizations to scale, innovate, and succeed in the digital age.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <LiquidButton variant="default" className="btn-primary inline-flex items-center gap-2">
-                Explore Solutions
-                <ArrowRight className="w-4 h-4" />
-              </LiquidButton>
-              <Button className="btn-secondary">View Case Studies</Button>
+              <Link href="/solutions">
+                <LiquidButton variant="default" className="btn-primary inline-flex items-center gap-2">
+                  Explore solutions
+                  <ArrowRight className="w-4 h-4" />
+                </LiquidButton>
+              </Link>
+              <Button asChild className="btn-secondary">
+                <Link href="/about">About us</Link>
+              </Button>
             </div>
           </div>
         }

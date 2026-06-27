@@ -1,15 +1,16 @@
 /**
  * FAQ Section - Marvelbytes Business Solutions
- * 
- * Design System: Modern Dark Theme
- * - Full-width accordion-style FAQ
- * - Smooth animations
- * - Common questions about services
  */
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { Link } from "wouter";
+import { SectionChapter } from "@/components/ui/section-chapter";
+import { ParallaxSection } from "@/components/ui/parallax-section";
+import { StaggerItem, StaggerReveal } from "@/components/ui/scroll-reveal";
+import { FAQ_BACKGROUND_IMAGE } from "@/data/hero-images";
+import { cn } from "@/lib/utils";
 
 const faqs = [
   {
@@ -44,31 +45,26 @@ const faqs = [
   },
 ];
 
-interface FAQItemProps {
+function FAQItem({
+  question,
+  answer,
+  isOpen,
+  onClick,
+}: {
   question: string;
   answer: string;
-  index: number;
   isOpen: boolean;
   onClick: () => void;
-}
-
-function FAQItem({ question, answer, index, isOpen, onClick }: FAQItemProps) {
+}) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="card-elevated p-6 md:p-8 cursor-pointer"
+    <div
+      className="card-elevated cursor-pointer p-4 transition-colors hover:border-primary/30 md:p-6"
       onClick={onClick}
     >
       <div className="flex items-center justify-between gap-4">
-        <h3 className="text-xl md:text-2xl font-semibold text-foreground">{question}</h3>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="flex-shrink-0"
-        >
-          <ChevronDown className="w-6 h-6 text-primary" />
+        <h3 className="text-base font-semibold text-foreground md:text-lg">{question}</h3>
+        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
+          <ChevronDown className="h-5 w-5 shrink-0 text-primary" />
         </motion.div>
       </div>
 
@@ -81,66 +77,69 @@ function FAQItem({ question, answer, index, isOpen, onClick }: FAQItemProps) {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="text-lg md:text-xl text-muted-foreground mt-4 leading-relaxed">
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
               {answer}
             </p>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
+  );
+}
+
+export function FAQContent({ className }: { className?: string }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  return (
+    <div className={cn("mx-auto w-full max-w-4xl", className)}>
+      <StaggerReveal className="space-y-3">
+        {faqs.map((faq, index) => (
+          <StaggerItem key={faq.question}>
+            <FAQItem
+              question={faq.question}
+              answer={faq.answer}
+              isOpen={openIndex === index}
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+            />
+          </StaggerItem>
+        ))}
+      </StaggerReveal>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="mt-10 text-center md:mt-14"
+      >
+        <p className="mb-4 text-base text-white/60 md:text-lg">
+          Still have questions? We&apos;re here to help.
+        </p>
+        <Link href="/contact" className="btn-primary inline-block px-8 py-3 text-base">
+          Contact Our Team
+        </Link>
+      </motion.div>
+    </div>
   );
 }
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
   return (
-    <section className="w-full py-20 md:py-32 bg-card/50">
-      <div className="container px-4 mx-auto">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground">
-              Find answers to common questions about our services and process.
-            </p>
-          </motion.div>
-
-          {/* FAQ Items */}
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <FAQItem
-                key={index}
-                question={faq.question}
-                answer={faq.answer}
-                index={index}
-                isOpen={openIndex === index}
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              />
-            ))}
-          </div>
-
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-center mt-16"
-          >
-            <p className="text-lg md:text-xl text-muted-foreground mb-6">
-              Still have questions? We're here to help.
-            </p>
-            <button className="btn-primary text-base px-8 py-3">Contact Our Team</button>
-          </motion.div>
-        </div>
+    <ParallaxSection
+      id="questions"
+      singleImage={FAQ_BACKGROUND_IMAGE}
+      monochrome={false}
+      className="parallax--faq bg-surface py-20 md:py-32"
+    >
+      <div className="container px-4">
+        <SectionChapter
+          title="Straight answers, no jargon"
+          subtitle="Find answers to common questions about our services and process."
+          align="center"
+          accentHalf="second"
+        />
+        <FAQContent />
       </div>
-    </section>
+    </ParallaxSection>
   );
 }

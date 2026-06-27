@@ -176,7 +176,7 @@ function LiquidButton({
           WebkitBackdropFilter: `url("#${filterId}")`,
         }}
       />
-      <div className="pointer-events-none relative z-10 flex items-center justify-center gap-2">
+      <div className="relative z-10 flex items-center justify-center gap-2">
         {children}
       </div>
       <GlassFilter id={filterId} />

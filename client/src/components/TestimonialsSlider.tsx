@@ -84,7 +84,7 @@ export default function TestimonialsSlider() {
         transition={{ duration: 0.6 }}
         className="text-center mb-16"
       >
-        <h2 className="heading-lg mb-4">What Our Clients Say</h2>
+        <h2 className="heading-lg mb-4">What our clients say</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Trusted by leading organizations worldwide to deliver exceptional
           results and drive business growth.
@@ -139,7 +139,7 @@ export default function TestimonialsSlider() {
           <button
             onClick={scrollPrev}
             disabled={prevBtnDisabled}
-            className="p-2 rounded-lg bg-secondary hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            className="cursor-pointer p-2 rounded-lg bg-secondary hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-5 h-5 text-foreground" />
@@ -147,7 +147,7 @@ export default function TestimonialsSlider() {
           <button
             onClick={scrollNext}
             disabled={nextBtnDisabled}
-            className="p-2 rounded-lg bg-secondary hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            className="cursor-pointer p-2 rounded-lg bg-secondary hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             aria-label="Next slide"
           >
             <ChevronRight className="w-5 h-5 text-foreground" />

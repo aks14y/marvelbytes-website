@@ -1,8 +1,12 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
+import AboutPage from "@/pages/AboutPage";
+import ContactPage from "@/pages/Contact";
+import SolutionsPage from "@/pages/Solutions";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { SmoothScrollProvider } from "./components/SmoothScrollProvider";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 
@@ -11,6 +15,9 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/solutions"} component={SolutionsPage} />
+      <Route path={"/about"} component={AboutPage} />
+      <Route path={"/contact"} component={ContactPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -31,8 +38,10 @@ function App() {
         // switchable
       >
         <TooltipProvider>
-          <Toaster />
-          <Router />
+          <SmoothScrollProvider>
+            <Toaster />
+            <Router />
+          </SmoothScrollProvider>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

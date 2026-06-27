@@ -10,8 +10,8 @@
   }
 }
 
-/* Import Google Fonts for Poppins and Inter */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+/* Space Grotesk — headings · Wix Madefor Display — body & UI */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Wix+Madefor+Display:wght@400;500;600&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -30,6 +30,8 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -52,43 +54,57 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --font-sans: "Wix Madefor Display", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  /* Marvelbytes Modern Dark Theme */
-  --primary: oklch(0.65 0.2 280); /* Vibrant Indigo */
-  --primary-foreground: oklch(0.05 0 0); /* Near Black */
-  --sidebar-primary: oklch(0.65 0.2 280);
-  --sidebar-primary-foreground: oklch(0.05 0 0);
-  --chart-1: oklch(0.65 0.2 280);
-  --chart-2: oklch(0.6 0.18 270);
-  --chart-3: oklch(0.55 0.16 260);
-  --chart-4: oklch(0.5 0.14 250);
-  --chart-5: oklch(0.45 0.12 240);
+  /* MarvelBytes brand — primary #4369AD + neutral grey surfaces */
+  --primary: #4369AD;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #4369AD;
+  --sidebar-primary-foreground: #ffffff;
+  --chart-1: #4369AD;
+  --chart-2: #5B7FC4;
+  --chart-3: #34568A;
+  --chart-4: #6E94D0;
+  --chart-5: #2A4570;
   --radius: 0.75rem;
-  --background: oklch(0.08 0.01 280); /* Deep Dark Blue */
-  --foreground: oklch(0.95 0.01 280); /* Near White */
-  --card: oklch(0.12 0.015 280); /* Dark Card */
-  --card-foreground: oklch(0.92 0.01 280);
-  --popover: oklch(0.12 0.015 280);
-  --popover-foreground: oklch(0.92 0.01 280);
-  --secondary: oklch(0.18 0.02 280);
-  --secondary-foreground: oklch(0.85 0.01 280);
-  --muted: oklch(0.22 0.02 280);
-  --muted-foreground: oklch(0.65 0.01 280);
-  --accent: oklch(0.65 0.2 280); /* Vibrant Indigo */
-  --accent-foreground: oklch(0.08 0 0);
+
+  /* Grey scale */
+  --grey-950: #030303;
+  --grey-900: #0c0c10;
+  --grey-850: #14141a;
+  --grey-800: #1c1c24;
+  --grey-700: #282830;
+  --grey-500: #71717a;
+  --grey-400: #a1a1ab;
+
+  --background: var(--grey-950);
+  --foreground: #f4f4f5;
+  --surface: var(--grey-900);
+  --surface-elevated: var(--grey-850);
+  --card: var(--grey-800);
+  --card-foreground: #e4e4e7;
+  --popover: var(--grey-800);
+  --popover-foreground: #e4e4e7;
+  --secondary: var(--grey-850);
+  --secondary-foreground: #d4d4d8;
+  --muted: var(--grey-800);
+  --muted-foreground: var(--grey-400);
+  --accent: #4369AD;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.18 0.02 280);
-  --input: oklch(0.15 0.015 280);
-  --ring: oklch(0.65 0.2 280);
-  --sidebar: oklch(0.12 0.015 280);
-  --sidebar-foreground: oklch(0.92 0.01 280);
-  --sidebar-accent: oklch(0.65 0.2 280);
-  --sidebar-accent-foreground: oklch(0.08 0 0);
-  --sidebar-border: oklch(0.18 0.02 280);
-  --sidebar-ring: oklch(0.65 0.2 280);
+  --border: var(--grey-700);
+  --input: var(--grey-850);
+  --ring: #4369AD;
+  --sidebar: var(--grey-800);
+  --sidebar-foreground: #e4e4e7;
+  --sidebar-accent: #4369AD;
+  --sidebar-accent-foreground: var(--grey-950);
+  --sidebar-border: var(--grey-700);
+  --sidebar-ring: #4369AD;
 }
 
 .dark {
@@ -127,45 +143,68 @@
 }
 
 @layer base {
+  html {
+    overflow-x: clip;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-    /* Aurora background effect */
-    background: 
-      radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 60% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
-      oklch(0.08 0.01 280);
+    @apply bg-background text-foreground font-sans;
+    overflow-x: clip;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background-color: var(--background);
+    background-image:
+      radial-gradient(ellipse at 15% 0%, rgba(67, 105, 173, 0.07) 0%, transparent 45%),
+      radial-gradient(circle, rgba(255, 255, 255, 0.025) 0.5px, transparent 0.5px);
+    background-size: 100% 100%, 40px 40px;
     background-attachment: fixed;
-    /* Subtle dot pattern overlay */
-    background-image: 
-      radial-gradient(circle, oklch(0.18 0.015 280) 0.5px, transparent 0.5px),
-      radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 60% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%);
-    background-size: 40px 40px, 100% 100%, 100% 100%, 100% 100%;
-    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  html.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  [id] {
+    scroll-margin-top: 5.5rem;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
+    font-family: var(--font-heading);
+    font-style: normal;
+    font-weight: 400;
+    text-transform: none;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
+  [data-slot="button"],
   [type="button"]:not(:disabled),
   [type="submit"]:not(:disabled),
   [type="reset"]:not(:disabled),
   a[href],
   select:not(:disabled),
   input[type="checkbox"]:not(:disabled),
-  input[type="radio"]:not(:disabled) {
-    @apply cursor-pointer;
+  input[type="radio"]:not(:disabled),
+  summary,
+  label[for] {
+    cursor: pointer;
   }
   /* Smooth transitions for interactive elements */
-  button, a, input, select, textarea {
+  button:not(:disabled),
+  a[href],
+  input,
+  select,
+  textarea {
     @apply transition-all duration-200;
   }
   /* Disable animations for users who prefer reduced motion */
@@ -173,6 +212,29 @@
     * {
       @apply !transition-none !animate-none;
     }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+
+  .cursor-wander-card {
+    width: 100%;
   }
 }
 
@@ -269,11 +331,11 @@
   }
 
   .btn-primary {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:shadow-lg hover:shadow-primary/50 hover:scale-98 active:scale-97 transition-all duration-200;
+    @apply cursor-pointer bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:shadow-lg hover:shadow-primary/50 hover:scale-98 active:scale-97 transition-all duration-200;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium border border-border hover:bg-muted hover:border-primary/50 transition-all duration-200;
+    @apply cursor-pointer bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium border border-border hover:bg-muted hover:border-primary/50 transition-all duration-200;
   }
 
   .aurora-glow {
@@ -282,15 +344,15 @@
   }
 
   .heading-xl {
-    @apply text-4xl md:text-5xl font-bold leading-tight text-foreground;
+    @apply text-4xl md:text-5xl font-bold leading-tight text-foreground normal-case;
   }
 
   .heading-lg {
-    @apply text-3xl md:text-4xl font-bold leading-snug text-foreground;
+    @apply text-3xl md:text-4xl font-bold leading-snug text-foreground normal-case;
   }
 
   .heading-md {
-    @apply text-2xl md:text-3xl font-semibold leading-snug text-foreground;
+    @apply text-2xl md:text-3xl font-semibold leading-snug text-foreground normal-case;
   }
 
   .text-body {
@@ -299,5 +361,122 @@
 
   .text-muted {
     @apply text-sm text-muted-foreground;
+  }
+
+  /* Parallax section backgrounds (About, etc.) */
+  .parallax-section__layers {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .parallax-section__layer {
+    pointer-events: none;
+    position: absolute;
+    top: -12%;
+    left: 0;
+    width: 100%;
+    height: 124%;
+    max-width: none;
+    object-fit: cover;
+    will-change: transform;
+  }
+
+  .parallax-section__layer--back {
+    z-index: 1;
+    opacity: 0.5;
+  }
+
+  .parallax-section__layer--mid {
+    z-index: 2;
+    opacity: 0.4;
+  }
+
+  .parallax-section__layer--front {
+    z-index: 3;
+    opacity: 0.55;
+    mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+  }
+
+  .parallax--single .parallax-section__layer--single {
+    z-index: 1;
+    opacity: 0.5;
+    top: -18%;
+    height: 136%;
+  }
+
+  /* FAQ parallax — subtle texture, aligned with other dark sections */
+  .parallax--faq.parallax--single .parallax-section__layer--single {
+    opacity: 0.46;
+    filter: saturate(0.5) brightness(0.62) contrast(0.92);
+  }
+
+  .parallax--faq .parallax-section__overlay {
+    background:
+      radial-gradient(
+        ellipse 85% 65% at 50% 32%,
+        rgba(3, 3, 3, 0.18) 0%,
+        rgba(3, 3, 3, 0.68) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(3, 3, 3, 0.42) 0%,
+        rgba(3, 3, 3, 0.72) 55%,
+        rgba(3, 3, 3, 0.9) 100%
+      );
+  }
+
+  /* Muted parallax — subdued imagery behind section headings */
+  .parallax--dulled.parallax--single .parallax-section__layer--single {
+    opacity: 0.38;
+    filter: saturate(0.4) brightness(0.5) contrast(1.06);
+  }
+
+  .parallax--dulled .parallax-section__overlay {
+    background:
+      radial-gradient(
+        ellipse 85% 65% at 50% 28%,
+        rgba(3, 3, 3, 0.2) 0%,
+        rgba(3, 3, 3, 0.7) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(3, 3, 3, 0.5) 0%,
+        rgba(3, 3, 3, 0.78) 50%,
+        rgba(3, 3, 3, 0.92) 100%
+      );
+  }
+
+  .parallax--monochrome .parallax-section__layer {
+    filter: grayscale(1) brightness(0.78) contrast(1.1);
+  }
+
+  .parallax--monochrome .parallax-section__layer--back {
+    opacity: 0.82;
+  }
+
+  .parallax--monochrome .parallax-section__layer--mid {
+    opacity: 0.68;
+  }
+
+  .parallax--monochrome .parallax-section__layer--front {
+    opacity: 0.88;
+    mask-image: linear-gradient(to bottom, black 0%, black 62%, transparent 100%);
+  }
+
+  .parallax-section__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background:
+      radial-gradient(ellipse 75% 55% at 50% 38%, transparent 35%, rgba(3, 3, 3, 0.45) 100%),
+      linear-gradient(
+        to bottom,
+        rgba(3, 3, 3, 0.25) 0%,
+        rgba(3, 3, 3, 0.5) 50%,
+        rgba(3, 3, 3, 0.75) 100%
+      );
   }
 }

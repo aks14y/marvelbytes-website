@@ -1,234 +1,180 @@
 /**
- * Animated Hero Component - Marvelbytes Business Solutions
- * 
- * Design System: Modern Dark Theme with Elegant Geometric Background
- * - Elegant geometric shapes with animations
- * - Rotating animated words
- * - Smooth spring animations
- * - CTA buttons with hover effects
+ * Animated Hero — headline, copy, and CTAs
  */
 
-import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
+"use client";
+
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type Variants,
+} from "framer-motion";
 import { MoveRight, PhoneCall } from "lucide-react";
+import { useLocation } from "wouter";
 import { LiquidButton } from "@/components/ui/button";
-import { ElegantShape } from "@/components/ui/elegant-geometric-bg";
+import { BackgroundShader } from "@/components/ui/background-shader";
+import Header from "@/components/Header";
+import { cn } from "@/lib/utils";
+import { HeroFlipHeading } from "@/components/ui/flip-words";
+import {
+  heroItemVariants,
+  heroStaggerVariants,
+} from "@/components/ui/cta-section-with-gallery";
+
+const EASE_OUT = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
+const buttonGroupVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+  },
+};
+
+const buttonWrapVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: EASE_OUT },
+  },
+};
+
+function HeroButton({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      variants={buttonWrapVariants}
+      whileHover={{
+        scale: 1.04,
+        y: -3,
+        transition: { duration: 0.3, ease: EASE_OUT },
+      }}
+      whileTap={{ scale: 0.97, y: 0 }}
+      className={cn("cursor-pointer", className)}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function AnimatedHero() {
-  const [titleNumber, setTitleNumber] = useState(0);
-  const titles = useMemo(
-    () => ["innovative", "scalable", "intelligent", "transformative", "cutting-edge"],
-    []
-  );
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const [, setLocation] = useLocation();
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (titleNumber === titles.length - 1) {
-        setTitleNumber(0);
-      } else {
-        setTitleNumber(titleNumber + 1);
-      }
-    }, 2500);
-    return () => clearTimeout(timeoutId);
-  }, [titleNumber, titles]);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
 
-  const fadeUpVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 1,
-        delay: 0.5 + i * 0.2,
-        ease: "easeInOut" as const,
-      },
-    }),
-  };
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
+  const copyY = useTransform(scrollYProgress, [0, 0.72], [0, -52]);
+  const bgOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.45]);
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" />
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen w-full overflow-x-clip bg-background"
+    >
+      <Header variant="hero" />
 
-      {/* Elegant Geometric Shapes */}
-      <div className="absolute inset-0 overflow-hidden">
-        <ElegantShape
-          delay={0.3}
-          width={600}
-          height={140}
-          rotate={12}
-          gradient="from-indigo-500/[0.15]"
-          className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
-        />
+      <motion.div
+        style={prefersReducedMotion ? undefined : { opacity: bgOpacity }}
+        className="pointer-events-none absolute inset-0"
+        aria-hidden
+      >
+        {prefersReducedMotion ? (
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/15 via-background to-background" />
+        ) : (
+          <BackgroundShader speed={0.55} />
+        )}
+      </motion.div>
 
-        <ElegantShape
-          delay={0.5}
-          width={500}
-          height={120}
-          rotate={-15}
-          gradient="from-rose-500/[0.15]"
-          className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
-        />
-
-        <ElegantShape
-          delay={0.4}
-          width={300}
-          height={80}
-          rotate={-8}
-          gradient="from-violet-500/[0.15]"
-          className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
-        />
-
-        <ElegantShape
-          delay={0.6}
-          width={200}
-          height={60}
-          rotate={20}
-          gradient="from-amber-500/[0.15]"
-          className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
-        />
-
-        <ElegantShape
-          delay={0.7}
-          width={150}
-          height={40}
-          rotate={-25}
-          gradient="from-cyan-500/[0.15]"
-          className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
-        />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 md:px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          {/* Badge */}
-          <motion.div
-            custom={0}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] mb-8 md:mb-12"
+      <div className="relative z-10 mx-auto flex min-h-screen w-[92%] max-w-3xl items-center justify-center px-0 pb-12 pt-16 sm:w-[88%] md:pb-16 md:pt-20 lg:w-[80%]">
+        <motion.div
+          style={
+            prefersReducedMotion
+              ? undefined
+              : { opacity: copyOpacity, y: copyY }
+          }
+          variants={heroStaggerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex w-full flex-col items-center justify-center text-center"
+        >
+          <motion.p
+            variants={heroItemVariants}
+            className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-primary md:mb-6"
           >
-            <div className="h-2 w-2 rounded-full bg-rose-500/80" />
-            <span className="text-sm text-white/60 tracking-wide">
-              Enterprise Solutions
-            </span>
+            Marvelbytes · Your digital story, engineered
+          </motion.p>
+
+          <motion.div variants={heroItemVariants}>
+            <HeroFlipHeading />
           </motion.div>
 
-          {/* Main Headline */}
-          <motion.div
-            custom={1}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
+          <motion.p
+            variants={heroItemVariants}
+            className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-white/50 md:text-lg"
           >
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
-                Enterprise Solutions,
-              </span>
-              <br />
-              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 h-20 md:h-28">
-                &nbsp;
-                {titles.map((title, index) => (
-                  <motion.span
-                    key={index}
-                    className="absolute font-bold bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300 bg-clip-text text-transparent"
-                    initial={{ opacity: 0, y: "-100" }}
-                    transition={{ type: "spring", stiffness: 50 } as any}
-                    animate={
-                      titleNumber === index
-                        ? {
-                            y: 0,
-                            opacity: 1,
-                          }
-                        : {
-                            y: titleNumber > index ? -150 : 150,
-                            opacity: 0,
-                          }
-                    }
-                  >
-                    {title}
-                  </motion.span>
-                ))}
-              </span>
-            </h1>
-          </motion.div>
+            Enterprise solutions that empower organizations to scale, innovate,
+            and succeed in the digital age.
+          </motion.p>
 
-          {/* Subtitle */}
           <motion.div
-            custom={2}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
+            variants={buttonGroupVariants}
+            className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:flex-row"
           >
-            <p className="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
-              Marvelbytes delivers enterprise-grade business solutions that empower
-              organizations to scale, innovate, and succeed in the digital age.
-            </p>
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            custom={3}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
-          >
-            <LiquidButton
-              size="xl"
-              surface="dark"
-              variant="outline"
-              className="gap-2 text-base text-white hover:text-white"
-            >
-              Schedule a Call
-              <PhoneCall className="size-5" />
-            </LiquidButton>
-            <LiquidButton
-              size="xl"
-              surface="dark"
-              variant="outline"
-              className="gap-2 text-base text-white/90 hover:text-white"
-            >
-              Explore Solutions
-              <MoveRight className="size-5" />
-            </LiquidButton>
-          </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            custom={4}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            className="mt-12"
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="text-center"
-            >
-              <p className="text-sm text-white/40 mb-2">Scroll to explore</p>
-              <svg
-                className="w-6 h-6 mx-auto text-white/40"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <HeroButton className="w-full sm:w-auto">
+              <LiquidButton
+                type="button"
+                size="xl"
+                surface="dark"
+                variant="outline"
+                onClick={() => setLocation("/contact")}
+                className="group w-full gap-2 text-base text-white transition-[box-shadow,border-color] duration-500 hover:border-primary/50 hover:text-white hover:shadow-[0_8px_30px_rgba(67,105,173,0.35)] sm:w-auto"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
+                Let&apos;s talk
+                <motion.span
+                  className="inline-flex"
+                  whileHover={{ rotate: [0, -12, 12, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <PhoneCall className="size-5 transition-transform duration-300 group-hover:scale-110" />
+                </motion.span>
+              </LiquidButton>
+            </HeroButton>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
-    </div>
+            <HeroButton className="w-full sm:w-auto">
+              <LiquidButton
+                type="button"
+                size="xl"
+                surface="dark"
+                variant="outline"
+                onClick={() => setLocation("/solutions")}
+                className="group w-full gap-2 text-base text-white/90 transition-[box-shadow,border-color,color] duration-500 hover:border-white/30 hover:text-white hover:shadow-[0_8px_30px_rgba(255,255,255,0.08)] sm:w-auto"
+              >
+                Explore solutions
+                <motion.span
+                  className="inline-flex"
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.25, ease: EASE_OUT }}
+                >
+                  <MoveRight className="size-5 transition-transform duration-300 group-hover:scale-110" />
+                </motion.span>
+              </LiquidButton>
+            </HeroButton>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
   );
 }

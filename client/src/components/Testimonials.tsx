@@ -27,7 +27,15 @@ const testimonials = [
   },
 ]
 
-export function Testimonials() {
+export function TestimonialsContent({
+  className,
+  showHeader = false,
+  flow,
+}: {
+  className?: string;
+  showHeader?: boolean;
+  flow?: boolean;
+}) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const [displayedQuote, setDisplayedQuote] = useState(testimonials[0].quote)
@@ -49,7 +57,29 @@ export function Testimonials() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-10 py-16">
+    <div className={cn("w-full", className)}>
+      {showHeader ? (
+        <div className={flow ? "mb-3 text-center md:mb-4" : "mb-8 text-center md:mb-10"}>
+          <h2
+            className={cn(
+              "font-bold text-white",
+              flow ? "text-2xl md:text-3xl mb-2" : "text-3xl md:text-5xl mb-4"
+            )}
+          >
+            What our clients say
+          </h2>
+          <p
+            className={cn(
+              "mx-auto max-w-2xl text-white/75",
+              flow ? "text-sm md:text-base" : "text-base md:text-lg"
+            )}
+          >
+            Trusted by industry leaders and innovative companies worldwide
+          </p>
+        </div>
+      ) : null}
+
+      <div className={cn("flex flex-col items-center", flow ? "gap-4 py-1" : "gap-8 py-4 md:gap-10")}>
       {/* Quote Container */}
       <div className="relative px-8">
         <span className="absolute -left-2 -top-6 text-7xl font-serif text-white/[0.06] select-none pointer-events-none">
@@ -58,7 +88,8 @@ export function Testimonials() {
 
         <p
           className={cn(
-            "text-2xl md:text-3xl font-light text-white text-center max-w-lg leading-relaxed transition-all duration-400 ease-out",
+            "font-light text-white text-center max-w-lg leading-relaxed transition-all duration-400 ease-out",
+            flow ? "text-lg md:text-xl" : "text-2xl md:text-3xl",
             isAnimating ? "opacity-0 blur-sm scale-[0.98]" : "opacity-100 blur-0 scale-100",
           )}
         >
@@ -146,6 +177,11 @@ export function Testimonials() {
           })}
         </div>
       </div>
+      </div>
     </div>
   )
+}
+
+export function Testimonials() {
+  return <TestimonialsContent />
 }

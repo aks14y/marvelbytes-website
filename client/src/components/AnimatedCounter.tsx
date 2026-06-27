@@ -7,12 +7,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface AnimatedCounterProps {
   value: number;
   label: string;
   suffix?: string;
   duration?: number;
+  compact?: boolean;
 }
 
 export default function AnimatedCounter({
@@ -20,6 +22,7 @@ export default function AnimatedCounter({
   label,
   suffix = "",
   duration = 2,
+  compact,
 }: AnimatedCounterProps) {
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef(null);
@@ -57,14 +60,24 @@ export default function AnimatedCounter({
       className="text-center"
     >
       <motion.div
-        className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-2"
+        className={cn(
+          "font-heading font-bold text-primary",
+          compact ? "mb-1 text-2xl md:text-3xl" : "mb-2 text-4xl md:text-5xl",
+        )}
         animate={{ filter: isInView ? "blur(0px)" : "blur(4px)" }}
         transition={{ duration: 0.3 }}
       >
-        {displayValue}
+        {displayValue.toLocaleString()}
         {suffix}
       </motion.div>
-      <p className="text-muted-foreground text-sm md:text-base">{label}</p>
+      <p
+        className={cn(
+          "text-white/60",
+          compact ? "text-xs" : "text-sm md:text-base",
+        )}
+      >
+        {label}
+      </p>
     </motion.div>
   );
 }

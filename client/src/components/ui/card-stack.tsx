@@ -287,7 +287,7 @@ export function CardStack<T extends CardStackItem>({
                   type="button"
                   onClick={() => setActive(idx)}
                   className={cn(
-                    "h-2 w-2 rounded-full transition",
+                    "cursor-pointer h-2 w-2 rounded-full transition",
                     on
                       ? "bg-primary"
                       : "bg-foreground/30 hover:bg-foreground/50"
