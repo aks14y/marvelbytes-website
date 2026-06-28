@@ -53,7 +53,8 @@ function buildLayout(count: number, cols: number): number[][] {
     const row = new Array<number>(cols).fill(-1);
     const a = (r * 2 + (r % 2)) % cols;
     row[a] = i++;
-    if (r % 3 === 0 && i < count) {
+    // Stagger pairs from row 1 onward so the first two items never share a row
+    if (r % 3 === 0 && r > 0 && i < count) {
       let b = (a + 2) % cols;
       if (b === a) b = (a + 1) % cols;
       row[b] = i++;
