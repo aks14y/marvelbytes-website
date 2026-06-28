@@ -158,6 +158,7 @@ export function ScrollPortraitWall({
   useGSAP(
     () => {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const isMobile = window.matchMedia("(max-width: 639px)").matches;
       const items = gsap.utils.toArray<HTMLElement>(".spw-item");
 
       if (reduce) {
@@ -178,6 +179,9 @@ export function ScrollPortraitWall({
         });
       }
 
+      const enterScale = isMobile ? 0.94 : 0;
+      const exitScale = isMobile ? 0.94 : 0;
+
       items.forEach((el) => {
         gsap
           .timeline({
@@ -190,10 +194,14 @@ export function ScrollPortraitWall({
           })
           .fromTo(
             el,
-            { scale: 0, opacity: 0.4 },
+            { scale: enterScale, opacity: isMobile ? 0.9 : 0.4 },
             { scale: 1, opacity: 1, ease: "power2.out" },
           )
-          .to(el, { scale: 0, opacity: 0.5, ease: "power2.in" });
+          .to(el, {
+            scale: exitScale,
+            opacity: isMobile ? 0.9 : 0.5,
+            ease: "power2.in",
+          });
       });
     },
     { scope: root, dependencies: [cols, showHint, speakers.length], revertOnUpdate: true }
@@ -203,7 +211,7 @@ export function ScrollPortraitWall({
     <section
       ref={root}
       aria-label={typeof title === "string" ? title : undefined}
-      className={cn("relative w-full overflow-x-clip bg-background text-foreground", className)}
+      className={cn("relative w-full bg-background text-foreground", className)}
     >
       {showHint ? (
         <div
@@ -216,10 +224,14 @@ export function ScrollPortraitWall({
         </div>
       ) : null}
 
-      <div className="pointer-events-none sticky top-1/2 z-20 w-full max-w-full -translate-y-1/2 overflow-hidden px-4 text-center text-white mix-blend-exclusion">
-        <h2 className="text-5xl font-semibold tracking-tighter sm:text-7xl md:text-8xl lg:text-9xl">
-          {title}
-        </h2>
+      <div className="pointer-events-none sticky top-0 z-20 flex h-svh w-full flex-col items-center justify-center px-4 text-center">
+        {typeof title === "string" ? (
+          <h2 className="text-5xl font-semibold tracking-tighter text-white sm:text-7xl md:text-8xl lg:text-9xl">
+            {title}
+          </h2>
+        ) : (
+          title
+        )}
         {date ? (
           <p
             className={cn(

@@ -73,7 +73,7 @@ export function WhyChooseUs() {
           />
         }
         date="We build scalable, reliable, and user-focused software solutions that help businesses innovate, grow, and succeed in the digital world."
-        dateClassName="mx-auto mt-4 max-w-2xl px-4 normal-case text-sm leading-relaxed tracking-normal text-white/55 mix-blend-normal sm:text-base md:mt-6"
+        dateClassName="mx-auto mt-4 max-w-2xl px-4 normal-case text-sm leading-relaxed tracking-normal text-white/55 sm:text-base md:mt-6"
         speakers={wallItems}
         columns={4}
         showCaptions={false}
