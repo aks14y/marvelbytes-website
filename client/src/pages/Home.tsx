@@ -4,6 +4,7 @@
 
 import AnimatedHero from "@/components/AnimatedHero";
 import About from "@/components/About";
+import ProjectsBuilt from "@/components/ProjectsBuilt";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 import Services from "@/components/Services";
 import SplitFeatureSection from "@/components/SplitFeatureSection";
@@ -17,6 +18,8 @@ export default function Home() {
       <AnimatedHero />
 
       <About />
+
+      <ProjectsBuilt />
 
       <WhyChooseUs />
 
