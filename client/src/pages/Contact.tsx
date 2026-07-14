@@ -97,12 +97,17 @@ export default function ContactPage() {
             </h2>
             <p className="mt-2 max-w-xl text-sm text-muted-foreground md:text-base">
               Or reach us directly at{" "}
-              <a
-                href={`mailto:${CONTACT.email}`}
-                className="font-medium text-primary underline-offset-4 hover:underline"
-              >
-                {CONTACT.email}
-              </a>
+              {CONTACT.emails.map((email, index) => (
+                <span key={email.href}>
+                  {index > 0 && " or "}
+                  <a
+                    href={email.href}
+                    className="font-medium text-primary underline-offset-4 hover:underline break-all"
+                  >
+                    {email.display}
+                  </a>
+                </span>
+              ))}
             </p>
           </ScrollReveal>
 
@@ -112,8 +117,15 @@ export default function ContactPage() {
                 icon={Mail}
                 title={CONTACT.emailSupport.title}
                 description={CONTACT.emailSupport.description}
-                href={`mailto:${CONTACT.email}`}
-                detail={CONTACT.email}
+                detail={CONTACT.emails.map((email) => (
+                  <a
+                    key={email.href}
+                    href={email.href}
+                    className="block break-all transition-colors hover:text-primary/80"
+                  >
+                    {email.display}
+                  </a>
+                ))}
               />
             </StaggerItem>
             <StaggerItem>
@@ -150,12 +162,17 @@ export default function ContactPage() {
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
             Email us at{" "}
-            <a
-              href={`mailto:${CONTACT.email}`}
-              className="text-primary underline-offset-4 hover:underline"
-            >
-              {CONTACT.email}
-            </a>{" "}
+            {CONTACT.emails.map((email, index) => (
+              <span key={email.href}>
+                {index > 0 && " or "}
+                <a
+                  href={email.href}
+                  className="text-primary underline-offset-4 hover:underline break-all"
+                >
+                  {email.display}
+                </a>
+              </span>
+            ))}{" "}
             or explore our work before reaching out.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">

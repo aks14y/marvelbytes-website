@@ -1,5 +1,15 @@
 export const CONTACT = {
-  email: "info@marvelbytes.com",
+  email: "info@marvelbytesbusiness.com",
+  emails: [
+    {
+      display: "info@marvelbytesbusiness.com",
+      href: "mailto:info@marvelbytesbusiness.com",
+    },
+    {
+      display: "marvelbytesprivatelimited@gmail.com",
+      href: "mailto:marvelbytesprivatelimited@gmail.com",
+    },
+  ],
   phones: [
     {
       label: "UAE",
@@ -12,8 +22,8 @@ export const CONTACT = {
       label: "India",
       title: "Call us (India)",
       description: "Reach our India office for local support.",
-      display: "+91 9400 385763",
-      href: "tel:+919400385763",
+      display: "+91 9744 377083",
+      href: "tel:+919744377083",
     },
   ],
   location: {

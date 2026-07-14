@@ -9,6 +9,8 @@ export interface DestinationCardProps
   location: string;
   flag?: string;
   stats: string;
+  /** Live project URL shown below the category line */
+  href?: string;
   /** HSL channels without hsl(), e.g. "216 44% 32%" */
   themeColor: string;
 }
@@ -21,6 +23,7 @@ const DestinationCard = React.forwardRef<HTMLDivElement, DestinationCardProps>(
       location,
       flag,
       stats,
+      href,
       themeColor,
       ...props
     },
@@ -75,6 +78,18 @@ const DestinationCard = React.forwardRef<HTMLDivElement, DestinationCardProps>(
             <p className="mt-1.5 text-sm font-medium leading-snug text-white/80">
               {stats}
             </p>
+            {href ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex w-fit items-center gap-1 text-sm font-semibold text-white underline-offset-4 transition-colors hover:underline"
+                onClick={(event) => event.stopPropagation()}
+              >
+                Visit website
+                <span aria-hidden>↗</span>
+              </a>
+            ) : null}
           </div>
         </div>
       </div>

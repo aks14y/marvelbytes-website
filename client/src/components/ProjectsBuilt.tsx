@@ -99,6 +99,7 @@ export default function ProjectsBuilt() {
                 imageUrl={project.image}
                 location={project.title}
                 stats={project.categories.join(" / ")}
+                href={project.href}
                 themeColor={PROJECT_THEME}
               />
             </StaggerItem>

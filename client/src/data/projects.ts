@@ -4,6 +4,8 @@ export interface Project {
   categories: string[];
   description?: string;
   image: string;
+  /** Live site URL — opens when the card is clicked */
+  href?: string;
 }
 
 export const projectCategories = [
@@ -16,8 +18,62 @@ export const projectCategories = [
 
 export type ProjectCategory = (typeof projectCategories)[number];
 
-/** Real portfolio — titles and categories matched to each image */
+/** Real portfolio — priority live sites first, then additional work */
 export const projects: Project[] = [
+  {
+    id: "gmge",
+    title: "GMGE",
+    categories: ["Web design"],
+    description:
+      "Corporate website for Green Mountain General Enterprises — security, ICT, and automation.",
+    image: "/images/work/gmge.jpg",
+    href: "https://gmge.ae/Web/",
+  },
+  {
+    id: "nasamat",
+    title: "Nasamat Group",
+    categories: ["Web design", "Marketing"],
+    description:
+      "E-commerce storefront for Ayurvedic and natural wellness products in the UAE.",
+    image: "/images/work/nasamat.jpg",
+    href: "https://nasamatgroup.com/",
+  },
+  {
+    id: "codeblue",
+    title: "Code Blue Medical Services",
+    categories: ["Web design"],
+    description:
+      "Healthcare consultancy and medical skills training site for Code Blue MS.",
+    image: "/images/work/codeblue.jpg",
+    href: "https://codebluems.ae/",
+  },
+  {
+    id: "ayurve",
+    title: "Ayurve Herbal",
+    categories: ["Web design", "Marketing"],
+    description:
+      "Ayurvedic skincare brand store with rituals, bestsellers, and product collections.",
+    image: "/images/work/ayurve.jpg",
+    href: "https://ayurveherbal.com/",
+  },
+  {
+    id: "creston",
+    title: "Creston Vision Contracting",
+    categories: ["Web design"],
+    description:
+      "Corporate website for Creston Vision Contracting LLC.",
+    image: "/images/work/creston.jpg",
+    href: "https://crestonvisionllc.com/",
+  },
+  {
+    id: "magnizent",
+    title: "Magnizent LLC",
+    categories: ["Web design", "Marketing"],
+    description:
+      "General trading e-commerce for industrial products and hardware in the UAE.",
+    image: "/images/work/magnizent.jpg",
+    href: "https://magnizentllc.com/",
+  },
   {
     id: "life1ems",
     title: "Life1EMS",

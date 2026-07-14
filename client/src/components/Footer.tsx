@@ -105,15 +105,17 @@ export default function Footer() {
                   </a>
                 </li>
               ))}
-              <li className="flex items-start gap-2">
-                <Mail className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                <a
-                  href={`mailto:${CONTACT.email}`}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {CONTACT.email}
-                </a>
-              </li>
+              {CONTACT.emails.map((email) => (
+                <li key={email.href} className="flex items-start gap-2">
+                  <Mail className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <a
+                    href={email.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors break-all"
+                  >
+                    {email.display}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
